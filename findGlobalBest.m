@@ -1,4 +1,4 @@
-function [ globalBestPosition, globalBestFitnessValue ] = findGlobalBest(n, m, c1, c2, Ps, Mg, d, w, Xmax, Xmin, Vmax, Vmin, jobMachineTimings)
+function [ globalBestPosition, globalBestFitnessValue ] = findGlobalBest(n, m, c1, c2, Ps, Mg, d, w, Xmax, Xmin, Vmax, Vmin, pathToFile)
 %findGlobalBest
 %   Detailed explanation goes here
 %   n: number of jobs
@@ -12,8 +12,10 @@ function [ globalBestPosition, globalBestFitnessValue ] = findGlobalBest(n, m, c
 %   jobMachineTimings: n x m matrix; where each element stores the time
 %   taken by a machine to process a job
 %   t: iteration counter
+%   pathToFile: absolute path to the file containing jobMachineTiming
 %   jobs: vector of jobs
     jobs = 1:n;
+    jobMachineTimings = readmatrix(pathToFile);
 %   initial values
     X0 = getInitialPositionMatrix(jobs, Ps);
     Xij = getPsByNMatrix(Xmin, Xmax, Ps, n);
@@ -50,7 +52,7 @@ function [ globalBestPosition, globalBestFitnessValue ] = findGlobalBest(n, m, c
     end
 %   plot the best fitness values obtained for each iteration
     plot(1:Mg+1,bestFitnessValues);
-    ylabel('best fitness value');
+    ylabel('global fitness value');
     xlabel('iteration');
     title('Global fitness value change');
 end
